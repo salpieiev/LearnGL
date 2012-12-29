@@ -30,18 +30,18 @@ const Vertex Vertices[] =
     {{0.5, -0.5, 0}, {1, 0, 0, 1}},
     {{0.5, 0.5, 0}, {0, 1, 0, 1}},
     {{-0.5, 0.5, 0}, {0, 0, 1, 1}},
-    {{-0.5, -0.5, 0}, {0, 0, 0, 1}},
-    {{-0.1, -0.1, 0}, {1, 1, 1, 1}},
-    {{-0.1, -0.2, 0}, {0.3, 1, 1, 1}},
-    {{-0.2, -0.2, 0}, {1, 0.6, 1, 1}},
-    {{-0.2, -0.1, 0}, {1, 1, 0.9, 1}},
+    {{-0.5, -0.5, 0}, {0, 0, 0, 1}}
+};
+
+const Vertex LineVertices[] =
+{
+    {{0.3, -0.3, 0}, {1, 1, 1, 1}},
+    {{0.3, 0.3, 0}, {1, 1, 1, 1}}
 };
 
 const GLubyte Indices[] = {
     0, 1, 2,
-    2, 3, 0,
-    4, 5, 6,
-    6, 7, 4
+    2, 3, 0
 };
 
 
@@ -56,16 +56,6 @@ Renderer::Renderer(int width, int height)
     
     glEnableVertexAttribArray(m_positionSlot);
     glEnableVertexAttribArray(m_colorSlot);
-    
-    GLuint vertexBuffer;
-    glGenBuffers(1, &vertexBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(Vertices), Vertices, GL_STATIC_DRAW);
-    
-    GLuint indexBuffer;
-    glGenBuffers(1, &indexBuffer);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Indices), Indices, GL_STATIC_DRAW);
 }
 
 Renderer::~Renderer()
@@ -78,10 +68,32 @@ void Renderer::Render() const
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
     
+    GLuint vertexBuffer;
+    glGenBuffers(1, &vertexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(Vertices), Vertices, GL_STATIC_DRAW);
+    
+    GLuint indexBuffer;
+    glGenBuffers(1, &indexBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Indices), Indices, GL_STATIC_DRAW);
+    
     glVertexAttribPointer(m_positionSlot, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), NULL);
     glVertexAttribPointer(m_colorSlot, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *)(sizeof(float) * 3));
     
     glDrawElements(GL_TRIANGLES, sizeof(Indices) / sizeof(Indices[0]), GL_UNSIGNED_BYTE, NULL);
+    
+    
+    
+    GLuint lineVertexBuffer;
+    glGenBuffers(1, &lineVertexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, lineVertexBuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(LineVertices), LineVertices, GL_STATIC_DRAW);
+    
+    glVertexAttribPointer(m_positionSlot, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), NULL);
+    glVertexAttribPointer(m_colorSlot, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *)(sizeof(float) * 3));
+    
+    glDrawArrays(GL_LINES, 0, sizeof(LineVertices) / sizeof(LineVertices[0]));
 }
 
 void Renderer::TearDown()
