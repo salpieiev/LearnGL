@@ -6,9 +6,14 @@
 //  Copyright (c) 2012 Sergey Alpeev. All rights reserved.
 //
 
-varying lowp vec4 colorVarying;
+const char *FragmentShader = STRINGIFY
+(
 
-void main()
-{
-    gl_FragColor = colorVarying;
-}
+ varying lowp vec4 DestinationColor;
+ 
+ void main(void)
+ {
+     gl_FragColor = DestinationColor;
+ }
+
+);

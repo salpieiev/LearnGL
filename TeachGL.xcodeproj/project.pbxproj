@@ -7,24 +7,26 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B49975C9168F6BBC000AC303 /* Matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B49975C7168F6BBC000AC303 /* Matrix.cpp */; };
 		B49C8B0D168AFDF700722C66 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B49C8B0C168AFDF700722C66 /* UIKit.framework */; };
 		B49C8B0F168AFDF700722C66 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B49C8B0E168AFDF700722C66 /* Foundation.framework */; };
 		B49C8B11168AFDF700722C66 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B49C8B10168AFDF700722C66 /* CoreGraphics.framework */; };
 		B49C8B13168AFDF700722C66 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B49C8B12168AFDF700722C66 /* GLKit.framework */; };
 		B49C8B15168AFDF700722C66 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B49C8B14168AFDF700722C66 /* OpenGLES.framework */; };
 		B49C8B1B168AFDF700722C66 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B49C8B19168AFDF700722C66 /* InfoPlist.strings */; };
-		B49C8B1D168AFDF700722C66 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B49C8B1C168AFDF700722C66 /* main.m */; };
-		B49C8B21168AFDF700722C66 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B49C8B20168AFDF700722C66 /* AppDelegate.m */; };
+		B49C8B1D168AFDF700722C66 /* main.mm in Sources */ = {isa = PBXBuildFile; fileRef = B49C8B1C168AFDF700722C66 /* main.mm */; };
+		B49C8B21168AFDF700722C66 /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = B49C8B20168AFDF700722C66 /* AppDelegate.mm */; };
 		B49C8B23168AFDF700722C66 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = B49C8B22168AFDF700722C66 /* Default.png */; };
 		B49C8B25168AFDF700722C66 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B49C8B24168AFDF700722C66 /* Default@2x.png */; };
 		B49C8B27168AFDF700722C66 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B49C8B26168AFDF700722C66 /* Default-568h@2x.png */; };
-		B49C8B2E168AFDF700722C66 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B49C8B2D168AFDF700722C66 /* ViewController.m */; };
+		B49C8B2E168AFDF700722C66 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B49C8B2D168AFDF700722C66 /* ViewController.mm */; };
 		B49C8B31168AFDF700722C66 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B49C8B2F168AFDF700722C66 /* ViewController.xib */; };
-		B4C9BC57168EFE3800224BA9 /* Shader.fsh in Sources */ = {isa = PBXBuildFile; fileRef = B4C9BC55168EFE3800224BA9 /* Shader.fsh */; };
-		B4C9BC58168EFE3800224BA9 /* Shader.vsh in Sources */ = {isa = PBXBuildFile; fileRef = B4C9BC56168EFE3800224BA9 /* Shader.vsh */; };
+		B4C9BC5D168F0C6D00224BA9 /* Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4C9BC5B168F0C6D00224BA9 /* Renderer.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B49975C7168F6BBC000AC303 /* Matrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Matrix.cpp; sourceTree = "<group>"; };
+		B49975C8168F6BBC000AC303 /* Matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix.h; sourceTree = "<group>"; };
 		B49C8B08168AFDF700722C66 /* TeachGL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TeachGL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B49C8B0C168AFDF700722C66 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		B49C8B0E168AFDF700722C66 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -33,18 +35,20 @@
 		B49C8B14168AFDF700722C66 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		B49C8B18168AFDF700722C66 /* TeachGL-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "TeachGL-Info.plist"; sourceTree = "<group>"; };
 		B49C8B1A168AFDF700722C66 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		B49C8B1C168AFDF700722C66 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		B49C8B1C168AFDF700722C66 /* main.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = main.mm; sourceTree = "<group>"; };
 		B49C8B1E168AFDF700722C66 /* TeachGL-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "TeachGL-Prefix.pch"; sourceTree = "<group>"; };
 		B49C8B1F168AFDF700722C66 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		B49C8B20168AFDF700722C66 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		B49C8B20168AFDF700722C66 /* AppDelegate.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = AppDelegate.mm; sourceTree = "<group>"; };
 		B49C8B22168AFDF700722C66 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		B49C8B24168AFDF700722C66 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		B49C8B26168AFDF700722C66 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		B49C8B2C168AFDF700722C66 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		B49C8B2D168AFDF700722C66 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		B49C8B2D168AFDF700722C66 /* ViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
 		B49C8B30168AFDF700722C66 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
 		B4C9BC55168EFE3800224BA9 /* Shader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shader.fsh; sourceTree = "<group>"; };
 		B4C9BC56168EFE3800224BA9 /* Shader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shader.vsh; sourceTree = "<group>"; };
+		B4C9BC5B168F0C6D00224BA9 /* Renderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Renderer.cpp; sourceTree = "<group>"; };
+		B4C9BC5C168F0C6D00224BA9 /* Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Renderer.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +70,7 @@
 		B414B30E168EFC0A00D221F3 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				B4C9BC59168EFF9400224BA9 /* Images */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -74,10 +79,19 @@
 			isa = PBXGroup;
 			children = (
 				B49C8B2C168AFDF700722C66 /* ViewController.h */,
-				B49C8B2D168AFDF700722C66 /* ViewController.m */,
+				B49C8B2D168AFDF700722C66 /* ViewController.mm */,
 				B49C8B2F168AFDF700722C66 /* ViewController.xib */,
 			);
 			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		B49975C1168F6AFE000AC303 /* Math */ = {
+			isa = PBXGroup;
+			children = (
+				B49975C7168F6BBC000AC303 /* Matrix.cpp */,
+				B49975C8168F6BBC000AC303 /* Matrix.h */,
+			);
+			name = Math;
 			sourceTree = "<group>";
 		};
 		B49C8AFD168AFDF700722C66 = {
@@ -114,9 +128,11 @@
 			isa = PBXGroup;
 			children = (
 				B4C9BC53168EFE1900224BA9 /* Shaders */,
+				B49975C1168F6AFE000AC303 /* Math */,
+				B4C9BC5A168F0C3700224BA9 /* GraphicsEngine */,
 				B414B310168EFC2E00D221F3 /* View Controllers */,
 				B49C8B1F168AFDF700722C66 /* AppDelegate.h */,
-				B49C8B20168AFDF700722C66 /* AppDelegate.m */,
+				B49C8B20168AFDF700722C66 /* AppDelegate.mm */,
 				B49C8B17168AFDF700722C66 /* Supporting Files */,
 			);
 			path = TeachGL;
@@ -127,7 +143,7 @@
 			children = (
 				B49C8B18168AFDF700722C66 /* TeachGL-Info.plist */,
 				B49C8B19168AFDF700722C66 /* InfoPlist.strings */,
-				B49C8B1C168AFDF700722C66 /* main.m */,
+				B49C8B1C168AFDF700722C66 /* main.mm */,
 				B49C8B1E168AFDF700722C66 /* TeachGL-Prefix.pch */,
 				B49C8B22168AFDF700722C66 /* Default.png */,
 				B49C8B24168AFDF700722C66 /* Default@2x.png */,
@@ -143,6 +159,22 @@
 				B4C9BC56168EFE3800224BA9 /* Shader.vsh */,
 			);
 			path = Shaders;
+			sourceTree = "<group>";
+		};
+		B4C9BC59168EFF9400224BA9 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		B4C9BC5A168F0C3700224BA9 /* GraphicsEngine */ = {
+			isa = PBXGroup;
+			children = (
+				B4C9BC5B168F0C6D00224BA9 /* Renderer.cpp */,
+				B4C9BC5C168F0C6D00224BA9 /* Renderer.h */,
+			);
+			name = GraphicsEngine;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -172,7 +204,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0450;
-				ORGANIZATIONNAME = "Sergey Alpeev";
+				ORGANIZATIONNAME = "Brisk Mobile Inc";
 			};
 			buildConfigurationList = B49C8B02168AFDF700722C66 /* Build configuration list for PBXProject "TeachGL" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -211,11 +243,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B49C8B1D168AFDF700722C66 /* main.m in Sources */,
-				B49C8B21168AFDF700722C66 /* AppDelegate.m in Sources */,
-				B49C8B2E168AFDF700722C66 /* ViewController.m in Sources */,
-				B4C9BC57168EFE3800224BA9 /* Shader.fsh in Sources */,
-				B4C9BC58168EFE3800224BA9 /* Shader.vsh in Sources */,
+				B49C8B1D168AFDF700722C66 /* main.mm in Sources */,
+				B49C8B21168AFDF700722C66 /* AppDelegate.mm in Sources */,
+				B49C8B2E168AFDF700722C66 /* ViewController.mm in Sources */,
+				B4C9BC5D168F0C6D00224BA9 /* Renderer.cpp in Sources */,
+				B49975C9168F6BBC000AC303 /* Matrix.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
