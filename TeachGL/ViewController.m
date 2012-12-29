@@ -103,6 +103,7 @@ GLfloat gCubeVertexData[216] =
     [super viewDidLoad];
     
     self.context = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2];
+    self.preferredFramesPerSecond = 60;
 
     if (!self.context) {
         NSLog(@"Failed to create ES context");
@@ -111,6 +112,7 @@ GLfloat gCubeVertexData[216] =
     GLKView *view = (GLKView *)self.view;
     view.context = self.context;
     view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
+    view.drawableMultisample = GLKViewDrawableMultisample4X;
     
     [self setupGL];
 }

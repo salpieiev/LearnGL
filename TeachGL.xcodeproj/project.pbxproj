@@ -18,10 +18,10 @@
 		B49C8B23168AFDF700722C66 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = B49C8B22168AFDF700722C66 /* Default.png */; };
 		B49C8B25168AFDF700722C66 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B49C8B24168AFDF700722C66 /* Default@2x.png */; };
 		B49C8B27168AFDF700722C66 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B49C8B26168AFDF700722C66 /* Default-568h@2x.png */; };
-		B49C8B29168AFDF700722C66 /* Shader.fsh in Resources */ = {isa = PBXBuildFile; fileRef = B49C8B28168AFDF700722C66 /* Shader.fsh */; };
-		B49C8B2B168AFDF700722C66 /* Shader.vsh in Resources */ = {isa = PBXBuildFile; fileRef = B49C8B2A168AFDF700722C66 /* Shader.vsh */; };
 		B49C8B2E168AFDF700722C66 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B49C8B2D168AFDF700722C66 /* ViewController.m */; };
 		B49C8B31168AFDF700722C66 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B49C8B2F168AFDF700722C66 /* ViewController.xib */; };
+		B4C9BC57168EFE3800224BA9 /* Shader.fsh in Sources */ = {isa = PBXBuildFile; fileRef = B4C9BC55168EFE3800224BA9 /* Shader.fsh */; };
+		B4C9BC58168EFE3800224BA9 /* Shader.vsh in Sources */ = {isa = PBXBuildFile; fileRef = B4C9BC56168EFE3800224BA9 /* Shader.vsh */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,11 +40,11 @@
 		B49C8B22168AFDF700722C66 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		B49C8B24168AFDF700722C66 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		B49C8B26168AFDF700722C66 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		B49C8B28168AFDF700722C66 /* Shader.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.fsh; path = Shaders/Shader.fsh; sourceTree = "<group>"; };
-		B49C8B2A168AFDF700722C66 /* Shader.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Shader.vsh; path = Shaders/Shader.vsh; sourceTree = "<group>"; };
 		B49C8B2C168AFDF700722C66 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		B49C8B2D168AFDF700722C66 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		B49C8B30168AFDF700722C66 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
+		B4C9BC55168EFE3800224BA9 /* Shader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shader.fsh; sourceTree = "<group>"; };
+		B4C9BC56168EFE3800224BA9 /* Shader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shader.vsh; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,10 +63,28 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B414B30E168EFC0A00D221F3 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		B414B310168EFC2E00D221F3 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				B49C8B2C168AFDF700722C66 /* ViewController.h */,
+				B49C8B2D168AFDF700722C66 /* ViewController.m */,
+				B49C8B2F168AFDF700722C66 /* ViewController.xib */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
 		B49C8AFD168AFDF700722C66 = {
 			isa = PBXGroup;
 			children = (
 				B49C8B16168AFDF700722C66 /* TeachGL */,
+				B414B30E168EFC0A00D221F3 /* Resources */,
 				B49C8B0B168AFDF700722C66 /* Frameworks */,
 				B49C8B09168AFDF700722C66 /* Products */,
 			);
@@ -95,13 +113,10 @@
 		B49C8B16168AFDF700722C66 /* TeachGL */ = {
 			isa = PBXGroup;
 			children = (
+				B4C9BC53168EFE1900224BA9 /* Shaders */,
+				B414B310168EFC2E00D221F3 /* View Controllers */,
 				B49C8B1F168AFDF700722C66 /* AppDelegate.h */,
 				B49C8B20168AFDF700722C66 /* AppDelegate.m */,
-				B49C8B28168AFDF700722C66 /* Shader.fsh */,
-				B49C8B2A168AFDF700722C66 /* Shader.vsh */,
-				B49C8B2C168AFDF700722C66 /* ViewController.h */,
-				B49C8B2D168AFDF700722C66 /* ViewController.m */,
-				B49C8B2F168AFDF700722C66 /* ViewController.xib */,
 				B49C8B17168AFDF700722C66 /* Supporting Files */,
 			);
 			path = TeachGL;
@@ -119,6 +134,15 @@
 				B49C8B26168AFDF700722C66 /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B4C9BC53168EFE1900224BA9 /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				B4C9BC55168EFE3800224BA9 /* Shader.fsh */,
+				B4C9BC56168EFE3800224BA9 /* Shader.vsh */,
+			);
+			path = Shaders;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -176,8 +200,6 @@
 				B49C8B23168AFDF700722C66 /* Default.png in Resources */,
 				B49C8B25168AFDF700722C66 /* Default@2x.png in Resources */,
 				B49C8B27168AFDF700722C66 /* Default-568h@2x.png in Resources */,
-				B49C8B29168AFDF700722C66 /* Shader.fsh in Resources */,
-				B49C8B2B168AFDF700722C66 /* Shader.vsh in Resources */,
 				B49C8B31168AFDF700722C66 /* ViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -192,6 +214,8 @@
 				B49C8B1D168AFDF700722C66 /* main.m in Sources */,
 				B49C8B21168AFDF700722C66 /* AppDelegate.m in Sources */,
 				B49C8B2E168AFDF700722C66 /* ViewController.m in Sources */,
+				B4C9BC57168EFE3800224BA9 /* Shader.fsh in Sources */,
+				B4C9BC58168EFE3800224BA9 /* Shader.vsh in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,6 +332,7 @@
 				B49C8B36168AFDF700722C66 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
