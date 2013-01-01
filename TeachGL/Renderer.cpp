@@ -7,6 +7,7 @@
 //
 
 #include "Renderer.h"
+#include "Matrix.h"
 #include <iostream>
 
 using namespace std;
@@ -27,21 +28,34 @@ typedef struct
 
 const Vertex Vertices[] =
 {
-    {{0.5, -0.5, 0}, {1, 0, 0, 1}},
-    {{0.5, 0.5, 0}, {0, 1, 0, 1}},
-    {{-0.5, 0.5, 0}, {0, 0, 1, 1}},
-    {{-0.5, -0.5, 0}, {0, 0, 0, 1}}
+    {{1, -1, -7}, {1, 0, 0, 1}},
+    {{1, 1, -7}, {0, 1, 0, 1}},
+    {{-1, 1, -7}, {0, 0, 1, 1}},
+    {{-1, -1, -7}, {0, 0, 0, 1}}
+};
+
+const GLubyte Indices[] =
+{
+    0, 1, 2,
+    2, 3, 0
 };
 
 const Vertex LineVertices[] =
 {
-    {{0.3, -0.3, 0}, {1, 1, 1, 1}},
-    {{0.3, 0.3, 0}, {1, 1, 1, 1}}
+    {{-2, -3.55, -4}, {1, 1, 1, 1}},
+    {{2, -3.55, -4}, {1, 1, 1, 1}},
+    {{2, 3.55, -4}, {1, 1, 1, 1}},
+    {{-2, 3.55, -4}, {1, 1, 1, 1}},
+    
+    {{-2, -3.55, -10}, {1, 1, 1, 1}},
+    {{2, -3.55, -10}, {1, 1, 1, 1}},
+    {{2, 3.55, -10}, {1, 1, 1, 1}},
+    {{-2, 3.55, -10}, {1, 1, 1, 1}}
 };
 
-const GLubyte Indices[] = {
-    0, 1, 2,
-    2, 3, 0
+const GLubyte LineIndices[] =
+{
+    0, 1, 1, 2, 2, 3, 3, 0, 0, 4, 4, 5, 5, 6, 6, 7, 7, 4, 1, 5, 2, 6, 3, 7
 };
 
 
@@ -53,9 +67,14 @@ Renderer::Renderer(int width, int height)
     
     m_positionSlot = glGetAttribLocation(m_program, "Position");
     m_colorSlot = glGetAttribLocation(m_program, "SourceColor");
+    m_projectionUniform = glGetUniformLocation(m_program, "Projection");
     
     glEnableVertexAttribArray(m_positionSlot);
     glEnableVertexAttribArray(m_colorSlot);
+    
+    float h = 4.0f * height / width;
+    mat4 projection = mat4::Frustum(-2.0f, 2.0f, -h / 2.0f, h / 2.0f, 4.0f, 10.0f);
+    glUniformMatrix4fv(m_projectionUniform, 1, GL_FALSE, projection.Pointer());
 }
 
 Renderer::~Renderer()
@@ -90,10 +109,16 @@ void Renderer::Render() const
     glBindBuffer(GL_ARRAY_BUFFER, lineVertexBuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(LineVertices), LineVertices, GL_STATIC_DRAW);
     
+    GLuint lineIndexBuffer;
+    glGenBuffers(1, &lineIndexBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, lineIndexBuffer);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(LineIndices), LineIndices, GL_STATIC_DRAW);
+    
     glVertexAttribPointer(m_positionSlot, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), NULL);
     glVertexAttribPointer(m_colorSlot, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *)(sizeof(float) * 3));
     
-    glDrawArrays(GL_LINES, 0, sizeof(LineVertices) / sizeof(LineVertices[0]));
+    GLint drawCount = sizeof(LineIndices) / sizeof(LineIndices[0]);
+    glDrawElements(GL_LINES, drawCount, GL_UNSIGNED_BYTE, 0);
 }
 
 void Renderer::TearDown()

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B49975C9168F6BBC000AC303 /* Matrix.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B49975C7168F6BBC000AC303 /* Matrix.cpp */; };
 		B49C8B0D168AFDF700722C66 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B49C8B0C168AFDF700722C66 /* UIKit.framework */; };
 		B49C8B0F168AFDF700722C66 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B49C8B0E168AFDF700722C66 /* Foundation.framework */; };
 		B49C8B11168AFDF700722C66 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B49C8B10168AFDF700722C66 /* CoreGraphics.framework */; };
@@ -25,8 +24,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		B49975C7168F6BBC000AC303 /* Matrix.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Matrix.cpp; sourceTree = "<group>"; };
 		B49975C8168F6BBC000AC303 /* Matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix.h; sourceTree = "<group>"; };
+		B49975CB168FB13E000AC303 /* Vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
 		B49C8B08168AFDF700722C66 /* TeachGL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TeachGL.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B49C8B0C168AFDF700722C66 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		B49C8B0E168AFDF700722C66 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -88,8 +87,8 @@
 		B49975C1168F6AFE000AC303 /* Math */ = {
 			isa = PBXGroup;
 			children = (
-				B49975C7168F6BBC000AC303 /* Matrix.cpp */,
 				B49975C8168F6BBC000AC303 /* Matrix.h */,
+				B49975CB168FB13E000AC303 /* Vector.h */,
 			);
 			name = Math;
 			sourceTree = "<group>";
@@ -247,7 +246,6 @@
 				B49C8B21168AFDF700722C66 /* AppDelegate.mm in Sources */,
 				B49C8B2E168AFDF700722C66 /* ViewController.mm in Sources */,
 				B4C9BC5D168F0C6D00224BA9 /* Renderer.cpp in Sources */,
-				B49975C9168F6BBC000AC303 /* Matrix.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -28,4 +28,5 @@ private:
     GLuint m_program;
     GLint m_positionSlot;
     GLint m_colorSlot;
+    GLint m_projectionUniform;
 };
