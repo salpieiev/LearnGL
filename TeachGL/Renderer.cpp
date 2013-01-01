@@ -42,20 +42,30 @@ const GLubyte Indices[] =
 
 const Vertex LineVertices[] =
 {
+    // Frustum
     {{-2, -3.55, -4}, {1, 1, 1, 1}},
     {{2, -3.55, -4}, {1, 1, 1, 1}},
     {{2, 3.55, -4}, {1, 1, 1, 1}},
     {{-2, 3.55, -4}, {1, 1, 1, 1}},
-    
     {{-2, -3.55, -10}, {1, 1, 1, 1}},
     {{2, -3.55, -10}, {1, 1, 1, 1}},
     {{2, 3.55, -10}, {1, 1, 1, 1}},
-    {{-2, 3.55, -10}, {1, 1, 1, 1}}
+    {{-2, 3.55, -10}, {1, 1, 1, 1}},
+    
+    {{0, 0, -4}, {1, 0, 0, 1}},
+    {{2, 0, -4}, {1, 0, 0, 1}},
+    {{0, 3, -10}, {0, 1, 0, 1}},
+    {{2, 3, -10}, {0, 1, 0, 1}},
+    {{-2, -3, -4}, {0, 0, 1, 1}},
+    {{2, -3, -4}, {0, 0, 1, 1}}
 };
 
 const GLubyte LineIndices[] =
 {
-    0, 1, 1, 2, 2, 3, 3, 0, 0, 4, 4, 5, 5, 6, 6, 7, 7, 4, 1, 5, 2, 6, 3, 7
+    // Frustum
+    0, 1, 1, 2, 2, 3, 3, 0, 0, 4, 4, 5, 5, 6, 6, 7, 7, 4, 1, 5, 2, 6, 3, 7,
+    
+    8, 9, 10, 11, 12, 13
 };
 
 
@@ -86,6 +96,15 @@ void Renderer::Render() const
 {
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
+    
+    int width = 640;
+    int height = 1136;
+    
+    glViewport(0, 0, width, height);
+    
+    float h = 4.0f * height / width;
+    mat4 projection = mat4::Frustum(-2.0f, 2.0f, -h / 2.0f, h / 2.0f, 4.0f, 10.0f);
+    glUniformMatrix4fv(m_projectionUniform, 1, GL_FALSE, projection.Pointer());
     
     GLuint vertexBuffer;
     glGenBuffers(1, &vertexBuffer);
