@@ -112,6 +112,32 @@ Renderer::Renderer()
     glEnableVertexAttribArray(m_colorSlot);
     
     glEnable(GL_DEPTH_TEST);
+    
+    
+    
+    glGenBuffers(1, &m_vertexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(Vertices), Vertices, GL_STATIC_DRAW);
+    
+    glGenBuffers(1, &m_indexBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Indices), Indices, GL_STATIC_DRAW);
+    
+    glGenBuffers(1, &m_lineVertexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, m_lineVertexBuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(LineVertices), LineVertices, GL_STATIC_DRAW);
+    
+    glGenBuffers(1, &m_lineIndexBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_lineIndexBuffer);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(LineIndices), LineIndices, GL_STATIC_DRAW);
+    
+    glGenBuffers(1, &m_cubeVertexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, m_cubeVertexBuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(CubeVertices), CubeVertices, GL_STATIC_DRAW);
+    
+    glGenBuffers(1, &m_cubeIndexBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_cubeIndexBuffer);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(CubeIndices), CubeIndices, GL_STATIC_DRAW);
 }
 
 Renderer::~Renderer()
@@ -134,15 +160,8 @@ void Renderer::Render(int width, int height, double time) const
     modelview = modelview.RotateZ(8 * std::sin(time));
     glUniformMatrix4fv(m_modelviewUniform, 1, GL_FALSE, modelview.Pointer());
     
-    GLuint vertexBuffer;
-    glGenBuffers(1, &vertexBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(Vertices), Vertices, GL_STATIC_DRAW);
-    
-    GLuint indexBuffer;
-    glGenBuffers(1, &indexBuffer);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Indices), Indices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);
     
     glVertexAttribPointer(m_positionSlot, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), NULL);
     glVertexAttribPointer(m_colorSlot, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *)(sizeof(float) * 3));
@@ -150,16 +169,8 @@ void Renderer::Render(int width, int height, double time) const
     glDrawElements(GL_TRIANGLES, sizeof(Indices) / sizeof(Indices[0]), GL_UNSIGNED_BYTE, NULL);
     
     
-    
-    GLuint lineVertexBuffer;
-    glGenBuffers(1, &lineVertexBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, lineVertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(LineVertices), LineVertices, GL_STATIC_DRAW);
-    
-    GLuint lineIndexBuffer;
-    glGenBuffers(1, &lineIndexBuffer);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, lineIndexBuffer);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(LineIndices), LineIndices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, m_lineVertexBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_lineIndexBuffer);
     
     glVertexAttribPointer(m_positionSlot, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), NULL);
     glVertexAttribPointer(m_colorSlot, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *)(sizeof(float) * 3));
@@ -168,7 +179,7 @@ void Renderer::Render(int width, int height, double time) const
     glDrawElements(GL_LINES, drawCount, GL_UNSIGNED_BYTE, NULL);
     
     
-    float degree = ((int)(time * 1000.0f)) % 36000 / 100.0f;
+    float degree = ((int)(time * 10000.0f)) % 36000 / 100.0f;
     cout << degree << endl;
     mat4 translated1 = mat4::Translate(0, 0, -7);
     mat4 rotated = mat4::RotateY(degree);
@@ -177,16 +188,8 @@ void Renderer::Render(int width, int height, double time) const
     modelview = translated2 * rotated * translated1 * modelview;
     glUniformMatrix4fv(m_modelviewUniform, 1, GL_FALSE, modelview.Pointer());
     
-    
-    GLuint cubeVertexBuffer;
-    glGenBuffers(1, &cubeVertexBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, cubeVertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(CubeVertices), CubeVertices, GL_STATIC_DRAW);
-    
-    GLuint cubeIndexBuffer;
-    glGenBuffers(1, &cubeIndexBuffer);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, cubeIndexBuffer);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(CubeIndices), CubeIndices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, m_cubeVertexBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_cubeIndexBuffer);
     
     glVertexAttribPointer(m_positionSlot, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), NULL);
     glVertexAttribPointer(m_colorSlot, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *)(sizeof(float) * 3));

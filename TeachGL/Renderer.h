@@ -26,6 +26,12 @@ private:
     GLuint BuildProgram(const char *vertexShader, const char *fragmentShader);
     
     GLuint m_program;
+    GLuint m_vertexBuffer;
+    GLuint m_indexBuffer;
+    GLuint m_lineVertexBuffer;
+    GLuint m_lineIndexBuffer;
+    GLuint m_cubeVertexBuffer;
+    GLuint m_cubeIndexBuffer;
     GLint m_positionSlot;
     GLint m_colorSlot;
     GLint m_projectionUniform;
