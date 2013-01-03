@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #include "Renderer.h"
+#import <QuartzCore/QuartzCore.h>
 
 
 
@@ -67,16 +68,21 @@
     view.drawableDepthFormat = GLKViewDrawableDepthFormat24;
     view.drawableMultisample = GLKViewDrawableMultisample4X;
     
-    CGFloat width = CGRectGetWidth(self.view.frame);
-    CGFloat height = CGRectGetHeight(self.view.frame);
-    m_renderer = new Renderer((int)width, (int)height);
+    m_renderer = new Renderer();
 }
 
 #pragma mark - GLKViewDelegate
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
-    m_renderer->Render();
+    CGFloat screenScale = [UIScreen mainScreen].scale;
+    
+    CGFloat width = screenScale * CGRectGetWidth(self.view.frame);
+    CGFloat height = screenScale * CGRectGetHeight(self.view.frame);
+    
+    CFTimeInterval mediaTime = CACurrentMediaTime();
+    
+    m_renderer->Render((int)width, (int)height, mediaTime);
 }
 
 @end

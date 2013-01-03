@@ -20,6 +20,7 @@
 		B49C8B27168AFDF700722C66 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B49C8B26168AFDF700722C66 /* Default-568h@2x.png */; };
 		B49C8B2E168AFDF700722C66 /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = B49C8B2D168AFDF700722C66 /* ViewController.mm */; };
 		B49C8B31168AFDF700722C66 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B49C8B2F168AFDF700722C66 /* ViewController.xib */; };
+		B4BE469D16959B1B00A0D72E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4BE469C16959B1B00A0D72E /* QuartzCore.framework */; };
 		B4C9BC5D168F0C6D00224BA9 /* Renderer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B4C9BC5B168F0C6D00224BA9 /* Renderer.cpp */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +45,7 @@
 		B49C8B2C168AFDF700722C66 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		B49C8B2D168AFDF700722C66 /* ViewController.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
 		B49C8B30168AFDF700722C66 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
+		B4BE469C16959B1B00A0D72E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		B4C9BC55168EFE3800224BA9 /* Shader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shader.fsh; sourceTree = "<group>"; };
 		B4C9BC56168EFE3800224BA9 /* Shader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = Shader.vsh; sourceTree = "<group>"; };
 		B4C9BC5B168F0C6D00224BA9 /* Renderer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Renderer.cpp; sourceTree = "<group>"; };
@@ -55,6 +57,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4BE469D16959B1B00A0D72E /* QuartzCore.framework in Frameworks */,
 				B49C8B0D168AFDF700722C66 /* UIKit.framework in Frameworks */,
 				B49C8B0F168AFDF700722C66 /* Foundation.framework in Frameworks */,
 				B49C8B11168AFDF700722C66 /* CoreGraphics.framework in Frameworks */,
@@ -114,6 +117,7 @@
 		B49C8B0B168AFDF700722C66 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B4BE469C16959B1B00A0D72E /* QuartzCore.framework */,
 				B49C8B0C168AFDF700722C66 /* UIKit.framework */,
 				B49C8B0E168AFDF700722C66 /* Foundation.framework */,
 				B49C8B10168AFDF700722C66 /* CoreGraphics.framework */,

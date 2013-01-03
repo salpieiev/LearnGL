@@ -15,10 +15,10 @@
 class Renderer
 {
 public:
-    Renderer(int width, int height);
+    Renderer();
     ~Renderer();
     
-    void Render() const;
+    void Render(int width, int height, double time) const;
     void TearDown();
     
 private:
@@ -29,4 +29,5 @@ private:
     GLint m_positionSlot;
     GLint m_colorSlot;
     GLint m_projectionUniform;
+    GLint m_modelviewUniform;
 };

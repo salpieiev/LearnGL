@@ -47,15 +47,15 @@ const Vertex LineVertices[] =
     {{2, -3.55, -4}, {1, 1, 1, 1}},
     {{2, 3.55, -4}, {1, 1, 1, 1}},
     {{-2, 3.55, -4}, {1, 1, 1, 1}},
-    {{-2, -3.55, -10}, {1, 1, 1, 1}},
-    {{2, -3.55, -10}, {1, 1, 1, 1}},
-    {{2, 3.55, -10}, {1, 1, 1, 1}},
-    {{-2, 3.55, -10}, {1, 1, 1, 1}},
+    {{-2, -3.55, -9.99}, {1, 1, 1, 1}},
+    {{2, -3.55, -9.99}, {1, 1, 1, 1}},
+    {{2, 3.55, -9.99}, {1, 1, 1, 1}},
+    {{-2, 3.55, -9.99}, {1, 1, 1, 1}},
     
     {{0, 0, -4}, {1, 0, 0, 1}},
     {{2, 0, -4}, {1, 0, 0, 1}},
-    {{0, 3, -10}, {0, 1, 0, 1}},
-    {{2, 3, -10}, {0, 1, 0, 1}},
+    {{0, 3, -9.99}, {0, 1, 0, 1}},
+    {{2, 3, -9.99}, {0, 1, 0, 1}},
     {{-2, -3, -4}, {0, 0, 1, 1}},
     {{2, -3, -4}, {0, 0, 1, 1}}
 };
@@ -68,9 +68,37 @@ const GLubyte LineIndices[] =
     8, 9, 10, 11, 12, 13
 };
 
+const Vertex CubeVertices[]
+{
+    {{1, -3, -6}, {0, 0, 0, 1}},
+    {{2, -3, -6}, {0, 0, 1, 1}},
+    {{2, -3, -7}, {0, 1, 0, 1}},
+    {{1, -3, -7}, {0, 1, 1, 1}},
+    {{1, -2, -6}, {1, 0, 0, 1}},
+    {{2, -2, -6}, {1, 0, 1, 1}},
+    {{2, -2, -7}, {1, 1, 0, 1}},
+    {{1, -2, -7}, {1, 1, 1, 1}}
+};
+
+const GLubyte CubeIndices[] =
+{
+    0, 1, 2,
+    0, 2, 3,
+    4, 5, 6,
+    4, 6, 7,
+    3, 6, 7,
+    2, 3, 6,
+    1, 2, 6,
+    1, 5, 6,
+    0, 3, 7,
+    0, 4, 7,
+    0, 1, 5,
+    0, 4, 5
+};
 
 
-Renderer::Renderer(int width, int height)
+
+Renderer::Renderer()
 {
     m_program = BuildProgram(VertexShader, FragmentShader);
     glUseProgram(m_program);
@@ -78,13 +106,12 @@ Renderer::Renderer(int width, int height)
     m_positionSlot = glGetAttribLocation(m_program, "Position");
     m_colorSlot = glGetAttribLocation(m_program, "SourceColor");
     m_projectionUniform = glGetUniformLocation(m_program, "Projection");
+    m_modelviewUniform = glGetUniformLocation(m_program, "Modelview");
     
     glEnableVertexAttribArray(m_positionSlot);
     glEnableVertexAttribArray(m_colorSlot);
     
-    float h = 4.0f * height / width;
-    mat4 projection = mat4::Frustum(-2.0f, 2.0f, -h / 2.0f, h / 2.0f, 4.0f, 10.0f);
-    glUniformMatrix4fv(m_projectionUniform, 1, GL_FALSE, projection.Pointer());
+    glEnable(GL_DEPTH_TEST);
 }
 
 Renderer::~Renderer()
@@ -92,19 +119,20 @@ Renderer::~Renderer()
     
 }
 
-void Renderer::Render() const
+void Renderer::Render(int width, int height, double time) const
 {
     glClearColor(0.5f, 0.5f, 0.5f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
-    
-    int width = 640;
-    int height = 1136;
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     glViewport(0, 0, width, height);
     
     float h = 4.0f * height / width;
     mat4 projection = mat4::Frustum(-2.0f, 2.0f, -h / 2.0f, h / 2.0f, 4.0f, 10.0f);
     glUniformMatrix4fv(m_projectionUniform, 1, GL_FALSE, projection.Pointer());
+    
+    mat4 modelview;
+    modelview = modelview.RotateZ(8 * std::sin(time));
+    glUniformMatrix4fv(m_modelviewUniform, 1, GL_FALSE, modelview.Pointer());
     
     GLuint vertexBuffer;
     glGenBuffers(1, &vertexBuffer);
@@ -137,7 +165,34 @@ void Renderer::Render() const
     glVertexAttribPointer(m_colorSlot, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *)(sizeof(float) * 3));
     
     GLint drawCount = sizeof(LineIndices) / sizeof(LineIndices[0]);
-    glDrawElements(GL_LINES, drawCount, GL_UNSIGNED_BYTE, 0);
+    glDrawElements(GL_LINES, drawCount, GL_UNSIGNED_BYTE, NULL);
+    
+    
+    float degree = ((int)(time * 1000.0f)) % 36000 / 100.0f;
+    cout << degree << endl;
+    mat4 translated1 = mat4::Translate(0, 0, -7);
+    mat4 rotated = mat4::RotateY(degree);
+    mat4 translated2 = mat4::Translate(0, 0, 7);
+    
+    modelview = translated2 * rotated * translated1 * modelview;
+    glUniformMatrix4fv(m_modelviewUniform, 1, GL_FALSE, modelview.Pointer());
+    
+    
+    GLuint cubeVertexBuffer;
+    glGenBuffers(1, &cubeVertexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, cubeVertexBuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(CubeVertices), CubeVertices, GL_STATIC_DRAW);
+    
+    GLuint cubeIndexBuffer;
+    glGenBuffers(1, &cubeIndexBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, cubeIndexBuffer);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(CubeIndices), CubeIndices, GL_STATIC_DRAW);
+    
+    glVertexAttribPointer(m_positionSlot, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), NULL);
+    glVertexAttribPointer(m_colorSlot, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *)(sizeof(float) * 3));
+    
+    drawCount = sizeof(CubeIndices) / sizeof(CubeIndices[0]);
+    glDrawElements(GL_TRIANGLES, drawCount, GL_UNSIGNED_BYTE, NULL);
 }
 
 void Renderer::TearDown()
