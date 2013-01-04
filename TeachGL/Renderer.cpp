@@ -77,7 +77,16 @@ const Vertex CubeVertices[]
     {{1, -2, -6}, {1, 0, 0, 1}},
     {{2, -2, -6}, {1, 0, 1, 1}},
     {{2, -2, -7}, {1, 1, 0, 1}},
-    {{1, -2, -7}, {1, 1, 1, 1}}
+    {{1, -2, -7}, {1, 1, 1, 1}},
+    
+    {{1, 3, -6}, {0.3, 0.3, 0.3, 1}},
+    {{2, 3, -6}, {0.3, 0.3, 0.3, 1}},
+    {{2, 3, -7}, {0.3, 0.3, 0.3, 1}},
+    {{1, 3, -7}, {0.3, 0.3, 0.3, 1}},
+    {{1, 2, -6}, {0.3, 0.3, 0.3, 1}},
+    {{2, 2, -6}, {0.3, 0.3, 0.3, 1}},
+    {{2, 2, -7}, {0.3, 0.3, 0.3, 1}},
+    {{1, 2, -7}, {0.3, 0.3, 0.3, 1}}
 };
 
 const GLubyte CubeIndices[] =
@@ -93,7 +102,20 @@ const GLubyte CubeIndices[] =
     0, 3, 7,
     0, 4, 7,
     0, 1, 5,
-    0, 4, 5
+    0, 4, 5,
+    
+    8, 9, 10,
+    8, 10, 11,
+    12, 13, 14,
+    12, 14, 15,
+    11, 14, 15,
+    10, 11, 14,
+    9, 10, 14,
+    9, 13, 14,
+    8, 11, 15,
+    8, 12, 15,
+    8, 9, 13,
+    8, 12, 13
 };
 
 
@@ -180,12 +202,12 @@ void Renderer::Render(int width, int height, double time) const
     
     
     float degree = ((int)(time * 10000.0f)) % 36000 / 100.0f;
-    cout << degree << endl;
+    
     mat4 translated1 = mat4::Translate(0, 0, -7);
-    mat4 rotated = mat4::RotateY(degree);
+    mat4 rotated1 = mat4::RotateY(degree);
     mat4 translated2 = mat4::Translate(0, 0, 7);
     
-    modelview = translated2 * rotated * translated1 * modelview;
+    modelview = translated2 * rotated1 * translated1 * modelview;
     glUniformMatrix4fv(m_modelviewUniform, 1, GL_FALSE, modelview.Pointer());
     
     glBindBuffer(GL_ARRAY_BUFFER, m_cubeVertexBuffer);
@@ -194,8 +216,18 @@ void Renderer::Render(int width, int height, double time) const
     glVertexAttribPointer(m_positionSlot, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), NULL);
     glVertexAttribPointer(m_colorSlot, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *)(sizeof(float) * 3));
     
-    drawCount = sizeof(CubeIndices) / sizeof(CubeIndices[0]);
+    drawCount = sizeof(CubeIndices[0]) * 3 * 12;
     glDrawElements(GL_TRIANGLES, drawCount, GL_UNSIGNED_BYTE, NULL);
+    
+    
+    mat4 translated3 = mat4::Translate(0, 0, -7);
+    mat4 rotated2 = mat4::RotateY(-degree * 2);
+    mat4 translated4 = mat4::Translate(0, 0, 7);
+    
+    modelview = translated4 * rotated2 * translated3 * modelview;
+    glUniformMatrix4fv(m_modelviewUniform, 1, GL_FALSE, modelview.Pointer());
+    
+    glDrawElements(GL_TRIANGLES, drawCount, GL_UNSIGNED_BYTE, (GLvoid *)(sizeof(GLubyte) * drawCount));
 }
 
 void Renderer::TearDown()
