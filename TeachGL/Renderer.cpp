@@ -9,6 +9,7 @@
 #include "Renderer.h"
 #include "Matrix.h"
 #include <iostream>
+#include <vector>
 
 using namespace std;
 
@@ -34,7 +35,7 @@ const Vertex Vertices[] =
     {{-1, -1, -7}, {0, 0, 0, 1}}
 };
 
-const GLubyte Indices[] =
+const GLushort Indices[] =
 {
     0, 1, 2,
     2, 3, 0
@@ -60,7 +61,7 @@ const Vertex LineVertices[] =
     {{2, -3, -4}, {0, 0, 1, 1}}
 };
 
-const GLubyte LineIndices[] =
+const GLushort LineIndices[] =
 {
     // Frustum
     0, 1, 1, 2, 2, 3, 3, 0, 0, 4, 4, 5, 5, 6, 6, 7, 7, 4, 1, 5, 2, 6, 3, 7,
@@ -89,7 +90,7 @@ const Vertex CubeVertices[]
     {{1, 2, -7}, {0.3, 0.3, 0.3, 1}}
 };
 
-const GLubyte CubeIndices[] =
+const GLushort CubeIndices[] =
 {
     0, 1, 2,
     0, 2, 3,
@@ -135,6 +136,115 @@ Renderer::Renderer()
     
     glEnable(GL_DEPTH_TEST);
     
+    // Generate new vertices for cubes with lighting
+    int cubeIndicesCount = sizeof(CubeIndices) / sizeof(CubeIndices[0]);
+    
+    vector<float> normalFloats(cubeIndicesCount * 7 * 2);
+    
+    for (int i = 2, j = 0; i < cubeIndicesCount; i += 3)
+    {
+        GLushort index0 = CubeIndices[i - 2];
+        GLushort index1 = CubeIndices[i - 1];
+        GLushort index2 = CubeIndices[i];
+        
+        Vertex vertex0 = CubeVertices[index0];
+        Vertex vertex1 = CubeVertices[index1];
+        Vertex vertex2 = CubeVertices[index2];
+        
+        vec3 vector0(vertex0.Position[0] - vertex1.Position[0],
+                     vertex0.Position[1] - vertex1.Position[1],
+                     vertex0.Position[2] - vertex1.Position[2]);
+        vec3 vector1(vertex2.Position[0] - vertex1.Position[0],
+                     vertex2.Position[1] - vertex1.Position[1],
+                     vertex2.Position[2] - vertex1.Position[2]);
+        vec3 normal = vector0.Cross(vector1);
+        normal.Normalize();
+        
+        
+        normalFloats[j++] = vertex0.Position[0];
+        normalFloats[j++] = vertex0.Position[1];
+        normalFloats[j++] = vertex0.Position[2];
+        
+        normalFloats[j++] = 1;
+        normalFloats[j++] = 0;
+        normalFloats[j++] = 0;
+        normalFloats[j++] = 1;
+        
+        normalFloats[j++] = vertex0.Position[0] + normal.x;
+        normalFloats[j++] = vertex0.Position[1] + normal.y;
+        normalFloats[j++] = vertex0.Position[2] + normal.z;
+        
+        normalFloats[j++] = 1;
+        normalFloats[j++] = 1;
+        normalFloats[j++] = 0;
+        normalFloats[j++] = 1;
+        
+        normalFloats[j++] = vertex1.Position[0];
+        normalFloats[j++] = vertex1.Position[1];
+        normalFloats[j++] = vertex1.Position[2];
+        
+        normalFloats[j++] = 1;
+        normalFloats[j++] = 0;
+        normalFloats[j++] = 0;
+        normalFloats[j++] = 1;
+        
+        normalFloats[j++] = vertex1.Position[0] + normal.x;
+        normalFloats[j++] = vertex1.Position[1] + normal.y;
+        normalFloats[j++] = vertex1.Position[2] + normal.z;
+        
+        normalFloats[j++] = 1;
+        normalFloats[j++] = 1;
+        normalFloats[j++] = 0;
+        normalFloats[j++] = 1;
+        
+        normalFloats[j++] = vertex2.Position[0];
+        normalFloats[j++] = vertex2.Position[1];
+        normalFloats[j++] = vertex2.Position[2];
+        
+        normalFloats[j++] = 1;
+        normalFloats[j++] = 0;
+        normalFloats[j++] = 0;
+        normalFloats[j++] = 1;
+        
+        normalFloats[j++] = vertex2.Position[0] + normal.x;
+        normalFloats[j++] = vertex2.Position[1] + normal.y;
+        normalFloats[j++] = vertex2.Position[2] + normal.z;
+        
+        normalFloats[j++] = 1;
+        normalFloats[j++] = 1;
+        normalFloats[j++] = 0;
+        normalFloats[j++] = 1;
+    }
+    
+    glGenBuffers(1, &m_normalBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, m_normalBuffer);
+    glBufferData(GL_ARRAY_BUFFER, normalFloats.size() * sizeof(float), &normalFloats[0], GL_STATIC_DRAW);
+    
+    
+    
+    /*
+    vector<float> cubeFloats;
+    cubeFloats.resize(cubeFloatsCount);
+    
+    for (int i = 0, j = 0; i < cubeVerticesCount; i++)
+    {
+        Vertex vertex = CubeVertices[i];
+        
+        cubeFloats[j++] = vertex.Position[0];
+        cubeFloats[j++] = vertex.Position[1];
+        cubeFloats[j++] = vertex.Position[2];
+        
+        cubeFloats[j++] = vertex.Color[0];
+        cubeFloats[j++] = vertex.Color[1];
+        cubeFloats[j++] = vertex.Color[2];
+        cubeFloats[j++] = vertex.Color[3];
+        
+        
+        cubeFloats[j++] = 0;
+        cubeFloats[j++] = 0;
+        cubeFloats[j++] = 0;
+    }
+    */
     
     
     glGenBuffers(1, &m_vertexBuffer);
@@ -188,7 +298,7 @@ void Renderer::Render(int width, int height, double time) const
     glVertexAttribPointer(m_positionSlot, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), NULL);
     glVertexAttribPointer(m_colorSlot, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *)(sizeof(float) * 3));
     
-    glDrawElements(GL_TRIANGLES, sizeof(Indices) / sizeof(Indices[0]), GL_UNSIGNED_BYTE, NULL);
+    glDrawElements(GL_TRIANGLES, sizeof(Indices) / sizeof(Indices[0]), GL_UNSIGNED_SHORT, NULL);
     
     
     glBindBuffer(GL_ARRAY_BUFFER, m_lineVertexBuffer);
@@ -198,7 +308,7 @@ void Renderer::Render(int width, int height, double time) const
     glVertexAttribPointer(m_colorSlot, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *)(sizeof(float) * 3));
     
     GLint drawCount = sizeof(LineIndices) / sizeof(LineIndices[0]);
-    glDrawElements(GL_LINES, drawCount, GL_UNSIGNED_BYTE, NULL);
+    glDrawElements(GL_LINES, drawCount, GL_UNSIGNED_SHORT, NULL);
     
     
     float degree = ((int)(time * 10000.0f)) % 36000 / 100.0f;
@@ -216,8 +326,8 @@ void Renderer::Render(int width, int height, double time) const
     glVertexAttribPointer(m_positionSlot, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), NULL);
     glVertexAttribPointer(m_colorSlot, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *)(sizeof(float) * 3));
     
-    drawCount = sizeof(CubeIndices[0]) * 3 * 12;
-    glDrawElements(GL_TRIANGLES, drawCount, GL_UNSIGNED_BYTE, NULL);
+    drawCount = 3 * 12;
+    glDrawElements(GL_TRIANGLES, drawCount, GL_UNSIGNED_SHORT, NULL);
     
     
     mat4 translated3 = mat4::Translate(0, 0, -7);
@@ -227,7 +337,13 @@ void Renderer::Render(int width, int height, double time) const
     modelview = translated4 * rotated2 * translated3 * modelview;
     glUniformMatrix4fv(m_modelviewUniform, 1, GL_FALSE, modelview.Pointer());
     
-    glDrawElements(GL_TRIANGLES, drawCount, GL_UNSIGNED_BYTE, (GLvoid *)(sizeof(GLubyte) * drawCount));
+    glDrawElements(GL_TRIANGLES, drawCount, GL_UNSIGNED_SHORT, (GLvoid *)(sizeof(GLushort) * drawCount));
+    
+    
+    glBindBuffer(GL_ARRAY_BUFFER, m_normalBuffer);
+    glVertexAttribPointer(m_positionSlot, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 7, NULL);
+    glVertexAttribPointer(m_colorSlot, 4, GL_FLOAT, GL_FALSE, sizeof(float) * 7, (GLvoid *)(sizeof(float) * 3));
+    glDrawArrays(GL_LINES, 0, sizeof(CubeIndices) / sizeof(CubeIndices[0]) * 7 * 2);
 }
 
 void Renderer::TearDown()

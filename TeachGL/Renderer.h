@@ -36,4 +36,6 @@ private:
     GLint m_colorSlot;
     GLint m_projectionUniform;
     GLint m_modelviewUniform;
+    
+    GLuint m_normalBuffer;
 };

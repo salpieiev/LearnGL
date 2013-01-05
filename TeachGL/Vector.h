@@ -22,6 +22,8 @@ class Vector3
 public:
     Vector3(T x, T y, T z);
     
+    float Length() const;
+    void Normalize();
     Vector3<T> Cross(const Vector3<T> &v) const;
     
     T x;
@@ -41,6 +43,21 @@ public:
 };
 
 
+
+template <typename T>
+float Vector3<T>::Length() const
+{
+    return sqrt(x * x + y * y + z * z);
+}
+
+template <typename T>
+void Vector3<T>::Normalize()
+{
+    float scale = 1.0f / Length();
+    x *= scale;
+    y *= scale;
+    z *= scale;
+}
 
 template <typename T>
 Vector3<T>::Vector3(T x, T y, T z): x(x), y(y), z(z)
