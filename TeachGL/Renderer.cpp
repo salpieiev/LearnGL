@@ -94,29 +94,29 @@ const GLushort CubeIndices[] =
 {
     0, 1, 2,
     0, 2, 3,
-    4, 5, 6,
-    4, 6, 7,
+    4, 6, 5,
+    4, 7, 6,
     3, 6, 7,
-    2, 3, 6,
-    1, 2, 6,
+    2, 6, 3,
+    1, 6, 2,
     1, 5, 6,
     0, 3, 7,
-    0, 4, 7,
-    0, 1, 5,
+    0, 7, 4,
+    0, 5, 1,
     0, 4, 5,
     
-    8, 9, 10,
-    8, 10, 11,
+    8, 10, 9,
+    8, 11, 10,
     12, 13, 14,
     12, 14, 15,
-    11, 14, 15,
+    11, 15, 14,
     10, 11, 14,
     9, 10, 14,
-    9, 13, 14,
-    8, 11, 15,
+    9, 14, 13,
+    8, 15, 11,
     8, 12, 15,
     8, 9, 13,
-    8, 12, 13
+    8, 13, 12
 };
 
 
@@ -220,33 +220,6 @@ Renderer::Renderer()
     glBindBuffer(GL_ARRAY_BUFFER, m_normalBuffer);
     glBufferData(GL_ARRAY_BUFFER, normalFloats.size() * sizeof(float), &normalFloats[0], GL_STATIC_DRAW);
     
-    
-    
-    /*
-    vector<float> cubeFloats;
-    cubeFloats.resize(cubeFloatsCount);
-    
-    for (int i = 0, j = 0; i < cubeVerticesCount; i++)
-    {
-        Vertex vertex = CubeVertices[i];
-        
-        cubeFloats[j++] = vertex.Position[0];
-        cubeFloats[j++] = vertex.Position[1];
-        cubeFloats[j++] = vertex.Position[2];
-        
-        cubeFloats[j++] = vertex.Color[0];
-        cubeFloats[j++] = vertex.Color[1];
-        cubeFloats[j++] = vertex.Color[2];
-        cubeFloats[j++] = vertex.Color[3];
-        
-        
-        cubeFloats[j++] = 0;
-        cubeFloats[j++] = 0;
-        cubeFloats[j++] = 0;
-    }
-    */
-    
-    
     glGenBuffers(1, &m_vertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
     glBufferData(GL_ARRAY_BUFFER, sizeof(Vertices), Vertices, GL_STATIC_DRAW);
@@ -343,7 +316,7 @@ void Renderer::Render(int width, int height, double time) const
     glBindBuffer(GL_ARRAY_BUFFER, m_normalBuffer);
     glVertexAttribPointer(m_positionSlot, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 7, NULL);
     glVertexAttribPointer(m_colorSlot, 4, GL_FLOAT, GL_FALSE, sizeof(float) * 7, (GLvoid *)(sizeof(float) * 3));
-    glDrawArrays(GL_LINES, 0, sizeof(CubeIndices) / sizeof(CubeIndices[0]) * 7 * 2);
+    glDrawArrays(GL_LINES, 0, sizeof(CubeIndices) / sizeof(CubeIndices[0]) * 2);
 }
 
 void Renderer::TearDown()
