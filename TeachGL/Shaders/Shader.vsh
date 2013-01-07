@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 Sergey Alpeev. All rights reserved.
 //
 
-const char * VertexShader = STRINGIFY
+const char *VertexShader = STRINGIFY
 (
 
 

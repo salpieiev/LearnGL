@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B48C1B3A169B4CE7009571F1 /* LightShader.vsh in Sources */ = {isa = PBXBuildFile; fileRef = B48C1B39169B4CE7009571F1 /* LightShader.vsh */; };
+		B48C1B3D169B4CF5009571F1 /* LightShader.fsh in Sources */ = {isa = PBXBuildFile; fileRef = B48C1B3C169B4CF5009571F1 /* LightShader.fsh */; };
 		B49C8B0D168AFDF700722C66 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B49C8B0C168AFDF700722C66 /* UIKit.framework */; };
 		B49C8B0F168AFDF700722C66 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B49C8B0E168AFDF700722C66 /* Foundation.framework */; };
 		B49C8B11168AFDF700722C66 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B49C8B10168AFDF700722C66 /* CoreGraphics.framework */; };
@@ -25,6 +27,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B48C1B39169B4CE7009571F1 /* LightShader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = LightShader.vsh; sourceTree = "<group>"; };
+		B48C1B3C169B4CF5009571F1 /* LightShader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = LightShader.fsh; sourceTree = "<group>"; };
 		B49975C8168F6BBC000AC303 /* Matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix.h; sourceTree = "<group>"; };
 		B49975CB168FB13E000AC303 /* Vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
 		B49C8B08168AFDF700722C66 /* TeachGL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TeachGL.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -158,8 +162,10 @@
 		B4C9BC53168EFE1900224BA9 /* Shaders */ = {
 			isa = PBXGroup;
 			children = (
-				B4C9BC55168EFE3800224BA9 /* Shader.fsh */,
 				B4C9BC56168EFE3800224BA9 /* Shader.vsh */,
+				B4C9BC55168EFE3800224BA9 /* Shader.fsh */,
+				B48C1B39169B4CE7009571F1 /* LightShader.vsh */,
+				B48C1B3C169B4CF5009571F1 /* LightShader.fsh */,
 			);
 			path = Shaders;
 			sourceTree = "<group>";
@@ -250,6 +256,8 @@
 				B49C8B21168AFDF700722C66 /* AppDelegate.mm in Sources */,
 				B49C8B2E168AFDF700722C66 /* ViewController.mm in Sources */,
 				B4C9BC5D168F0C6D00224BA9 /* Renderer.cpp in Sources */,
+				B48C1B3A169B4CE7009571F1 /* LightShader.vsh in Sources */,
+				B48C1B3D169B4CF5009571F1 /* LightShader.fsh in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

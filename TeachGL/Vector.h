@@ -20,6 +20,7 @@ template <typename T>
 class Vector3
 {
 public:
+    Vector3();
     Vector3(T x, T y, T z);
     
     float Length() const;
@@ -43,6 +44,12 @@ public:
 };
 
 
+
+template <typename T>
+Vector3<T>::Vector3(): x(0), y(0), z(0)
+{
+    
+}
 
 template <typename T>
 float Vector3<T>::Length() const

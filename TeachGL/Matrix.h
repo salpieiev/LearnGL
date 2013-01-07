@@ -12,6 +12,21 @@
 
 
 template <typename T>
+class Matrix3
+{
+public:
+    Matrix3();
+    
+    const T * Pointer() const;
+    
+    vec3 x;
+    vec3 y;
+    vec3 z;
+};
+
+
+
+template <typename T>
 class Matrix4
 {
 public:
@@ -20,6 +35,7 @@ public:
     const T * Pointer() const;
     
     Matrix4<T> operator * (const Matrix4<T> m) const;
+    Matrix3<T> ToMat3() const;
     
     static inline Matrix4<T> Translate(T x, T y, T z);
     static inline Matrix4<T> Scale(T x, T y, T z);
@@ -33,6 +49,21 @@ public:
     vec4 z;
     vec4 w;
 };
+
+
+
+
+template <typename T>
+Matrix3<T>::Matrix3()
+{
+    
+}
+
+template <typename T>
+const T * Matrix3<T>::Pointer() const
+{
+    return &x.x;
+}
 
 
 
@@ -76,6 +107,16 @@ inline Matrix4<T> Matrix4<T>::operator * (const Matrix4<T> b) const
     m.w.z = w.x * b.x.z + w.y * b.y.z + w.z * b.z.z + w.w * b.w.z;
     m.w.w = w.x * b.x.w + w.y * b.y.w + w.z * b.z.w + w.w * b.w.w;
     
+    return m;
+}
+
+template <typename T>
+inline Matrix3<T> Matrix4<T>::ToMat3() const
+{
+    Matrix3<T> m;
+    m.x.x = x.x; m.x.y = x.y; m.x.z = x.z;
+    m.y.x = y.x; m.y.y = y.y; m.y.z = y.z;
+    m.z.x = z.x; m.z.y = z.y; m.z.z = z.z;
     return m;
 }
 
@@ -166,4 +207,5 @@ inline Matrix4<T> Matrix4<T>::Frustum(T left, T right, T bottom, T top, T near, 
 
 
 
+typedef Matrix3<float> mat3;
 typedef Matrix4<float> mat4;

@@ -16,8 +16,10 @@ using namespace std;
 
 
 #define STRINGIFY(A)    #A
-#include "Shaders/Shader.fsh"
 #include "Shaders/Shader.vsh"
+#include "Shaders/Shader.fsh"
+#include "Shaders/LightShader.vsh"
+#include "Shaders/LightShader.fsh"
 
 
 
@@ -123,8 +125,8 @@ const GLushort CubeIndices[] =
 
 Renderer::Renderer()
 {
+    // No lighting
     m_program = BuildProgram(VertexShader, FragmentShader);
-    glUseProgram(m_program);
     
     m_positionSlot = glGetAttribLocation(m_program, "Position");
     m_colorSlot = glGetAttribLocation(m_program, "SourceColor");
@@ -134,14 +136,38 @@ Renderer::Renderer()
     glEnableVertexAttribArray(m_positionSlot);
     glEnableVertexAttribArray(m_colorSlot);
     
+    // Lighting
+    m_lightProgram = BuildProgram(LightVertexShader, LightFragmentShader);
+    
+    m_lightAttributes.Position = glGetAttribLocation(m_lightProgram, "Position");
+    m_lightAttributes.Normal = glGetAttribLocation(m_lightProgram, "Normal");
+    m_lightAttributes.Diffuse = glGetAttribLocation(m_lightProgram, "DiffuseMaterial");
+    
+    m_lightUniforms.Modelview = glGetUniformLocation(m_lightProgram, "Modelview");
+    m_lightUniforms.Projection = glGetUniformLocation(m_lightProgram, "Projection");;
+    m_lightUniforms.NormalMatrix = glGetUniformLocation(m_lightProgram, "NormalMatrix");;
+    m_lightUniforms.LightPosition = glGetUniformLocation(m_lightProgram, "LightPosition");;
+    m_lightUniforms.Ambient = glGetUniformLocation(m_lightProgram, "AmbientMaterial");;
+    m_lightUniforms.Specular = glGetUniformLocation(m_lightProgram, "SpecularMaterial");;
+    m_lightUniforms.Shininess = glGetUniformLocation(m_lightProgram, "Shininess");
+    
+    glUniform4f(m_lightUniforms.LightPosition, 0.25f, 0.25f, 1.0f, 0.0f);
+    glUniform3f(m_lightUniforms.Ambient, 0.04f, 0.04f, 0.04f);
+    glUniform3f(m_lightUniforms.Specular, 0.5f, 0.5f, 0.5f);
+    glUniform1f(m_lightUniforms.Shininess, 50.0f);
+    
+    glEnableVertexAttribArray(m_lightAttributes.Position);
+    glEnableVertexAttribArray(m_lightAttributes.Normal);
+    
     glEnable(GL_DEPTH_TEST);
     
-    // Generate new vertices for cubes with lighting
+    // Visual normals
     int cubeIndicesCount = sizeof(CubeIndices) / sizeof(CubeIndices[0]);
     
     vector<float> normalFloats(cubeIndicesCount * 7 * 2);
+    vector<float> normals(cubeIndicesCount * 3);
     
-    for (int i = 2, j = 0; i < cubeIndicesCount; i += 3)
+    for (int i = 2, j = 0, k = 0; i < cubeIndicesCount; i += 3)
     {
         GLushort index0 = CubeIndices[i - 2];
         GLushort index1 = CubeIndices[i - 1];
@@ -159,6 +185,16 @@ Renderer::Renderer()
                      vertex2.Position[2] - vertex1.Position[2]);
         vec3 normal = vector0.Cross(vector1);
         normal.Normalize();
+        
+        normals[k++] = normal.x;
+        normals[k++] = normal.y;
+        normals[k++] = normal.z;
+        normals[k++] = normal.x;
+        normals[k++] = normal.y;
+        normals[k++] = normal.z;
+        normals[k++] = normal.x;
+        normals[k++] = normal.y;
+        normals[k++] = normal.z;
         
         
         normalFloats[j++] = vertex0.Position[0];
@@ -216,9 +252,36 @@ Renderer::Renderer()
         normalFloats[j++] = 1;
     }
     
-    glGenBuffers(1, &m_normalBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, m_normalBuffer);
+    // Real normals
+    vector<float> cubeVertexBuffer(cubeIndicesCount * 10);
+    
+    for (int i = 0, j = 0, k = 0; i < cubeIndicesCount; i++)
+    {
+        GLushort vertexIndex = CubeIndices[i];
+        Vertex cubeVertex = CubeVertices[vertexIndex];
+        
+        cubeVertexBuffer[j++] = cubeVertex.Position[0];
+        cubeVertexBuffer[j++] = cubeVertex.Position[1];
+        cubeVertexBuffer[j++] = cubeVertex.Position[2];
+        
+        cubeVertexBuffer[j++] = cubeVertex.Color[0];
+        cubeVertexBuffer[j++] = cubeVertex.Color[1];
+        cubeVertexBuffer[j++] = cubeVertex.Color[2];
+        cubeVertexBuffer[j++] = cubeVertex.Color[3];
+        
+        cubeVertexBuffer[j++] = normals[k++];
+        cubeVertexBuffer[j++] = normals[k++];
+        cubeVertexBuffer[j++] = normals[k++];
+    }
+    
+    
+    glGenBuffers(1, &m_visualNormalBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, m_visualNormalBuffer);
     glBufferData(GL_ARRAY_BUFFER, normalFloats.size() * sizeof(float), &normalFloats[0], GL_STATIC_DRAW);
+    
+    glGenBuffers(1, &m_cubeVertexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, m_cubeVertexBuffer);
+    glBufferData(GL_ARRAY_BUFFER, cubeVertexBuffer.size() * sizeof(float), &cubeVertexBuffer[0], GL_STATIC_DRAW);
     
     glGenBuffers(1, &m_vertexBuffer);
     glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
@@ -235,14 +298,6 @@ Renderer::Renderer()
     glGenBuffers(1, &m_lineIndexBuffer);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_lineIndexBuffer);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(LineIndices), LineIndices, GL_STATIC_DRAW);
-    
-    glGenBuffers(1, &m_cubeVertexBuffer);
-    glBindBuffer(GL_ARRAY_BUFFER, m_cubeVertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(CubeVertices), CubeVertices, GL_STATIC_DRAW);
-    
-    glGenBuffers(1, &m_cubeIndexBuffer);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_cubeIndexBuffer);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(CubeIndices), CubeIndices, GL_STATIC_DRAW);
 }
 
 Renderer::~Renderer()
@@ -256,6 +311,8 @@ void Renderer::Render(int width, int height, double time) const
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     
     glViewport(0, 0, width, height);
+    
+    glUseProgram(m_program);
     
     float h = 4.0f * height / width;
     mat4 projection = mat4::Frustum(-2.0f, 2.0f, -h / 2.0f, h / 2.0f, 4.0f, 10.0f);
@@ -284,6 +341,11 @@ void Renderer::Render(int width, int height, double time) const
     glDrawElements(GL_LINES, drawCount, GL_UNSIGNED_SHORT, NULL);
     
     
+    
+    glUseProgram(m_lightProgram);
+    glUniformMatrix4fv(m_lightUniforms.Projection, 1, GL_FALSE, projection.Pointer());
+    glVertexAttrib4f(m_lightAttributes.Diffuse, 0.3, 0.6, 0.9, 1);
+    
     float degree = ((int)(time * 10000.0f)) % 36000 / 100.0f;
     
     mat4 translated1 = mat4::Translate(0, 0, -7);
@@ -291,16 +353,17 @@ void Renderer::Render(int width, int height, double time) const
     mat4 translated2 = mat4::Translate(0, 0, 7);
     
     modelview = translated2 * rotated1 * translated1 * modelview;
-    glUniformMatrix4fv(m_modelviewUniform, 1, GL_FALSE, modelview.Pointer());
+    glUniformMatrix4fv(m_lightUniforms.Modelview, 1, GL_FALSE, modelview.Pointer());
+    glUniformMatrix3fv(m_lightUniforms.NormalMatrix, 1, GL_FALSE, modelview.ToMat3().Pointer());
     
     glBindBuffer(GL_ARRAY_BUFFER, m_cubeVertexBuffer);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_cubeIndexBuffer);
     
-    glVertexAttribPointer(m_positionSlot, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), NULL);
-    glVertexAttribPointer(m_colorSlot, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *)(sizeof(float) * 3));
+    glVertexAttribPointer(m_lightAttributes.Position, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex) + 3 * sizeof(float), NULL);
+//    glVertexAttribPointer(m_colorSlot, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex) + 3 * sizeof(float), (GLvoid *)(sizeof(float) * 3));
+    glVertexAttribPointer(m_lightAttributes.Normal, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex) + 3 * sizeof(float), (GLvoid *)(sizeof(float) * 7));
     
     drawCount = 3 * 12;
-    glDrawElements(GL_TRIANGLES, drawCount, GL_UNSIGNED_SHORT, NULL);
+    glDrawArrays(GL_TRIANGLES, 0, drawCount);
     
     
     mat4 translated3 = mat4::Translate(0, 0, -7);
@@ -308,14 +371,15 @@ void Renderer::Render(int width, int height, double time) const
     mat4 translated4 = mat4::Translate(0, 0, 7);
     
     modelview = translated4 * rotated2 * translated3 * modelview;
-    glUniformMatrix4fv(m_modelviewUniform, 1, GL_FALSE, modelview.Pointer());
+    glUniformMatrix4fv(m_lightUniforms.Modelview, 1, GL_FALSE, modelview.Pointer());
+    glUniformMatrix3fv(m_lightUniforms.NormalMatrix, 1, GL_FALSE, modelview.ToMat3().Pointer());
     
-    glDrawElements(GL_TRIANGLES, drawCount, GL_UNSIGNED_SHORT, (GLvoid *)(sizeof(GLushort) * drawCount));
+    glDrawArrays(GL_TRIANGLES, drawCount, drawCount);
     
     
-    glBindBuffer(GL_ARRAY_BUFFER, m_normalBuffer);
-    glVertexAttribPointer(m_positionSlot, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 7, NULL);
-    glVertexAttribPointer(m_colorSlot, 4, GL_FLOAT, GL_FALSE, sizeof(float) * 7, (GLvoid *)(sizeof(float) * 3));
+    glBindBuffer(GL_ARRAY_BUFFER, m_visualNormalBuffer);
+    glVertexAttribPointer(m_lightAttributes.Position, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 7, NULL);
+    glVertexAttribPointer(m_lightAttributes.Normal, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 7, (GLvoid *)(sizeof(float) * 7));
     glDrawArrays(GL_LINES, 0, sizeof(CubeIndices) / sizeof(CubeIndices[0]) * 2);
 }
 

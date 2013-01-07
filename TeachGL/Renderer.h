@@ -12,6 +12,26 @@
 
 
 
+struct LightAttributes
+{
+    GLint Position;
+    GLint Normal;
+    GLint Diffuse;
+};
+
+struct LightUniforms
+{
+    GLuint Modelview;
+    GLuint Projection;
+    GLuint NormalMatrix;
+    GLuint LightPosition;
+    GLuint Ambient;
+    GLuint Specular;
+    GLuint Shininess;
+};
+
+
+
 class Renderer
 {
 public:
@@ -26,16 +46,19 @@ private:
     GLuint BuildProgram(const char *vertexShader, const char *fragmentShader);
     
     GLuint m_program;
+    GLuint m_lightProgram;
     GLuint m_vertexBuffer;
     GLuint m_indexBuffer;
     GLuint m_lineVertexBuffer;
     GLuint m_lineIndexBuffer;
     GLuint m_cubeVertexBuffer;
-    GLuint m_cubeIndexBuffer;
+    GLuint m_visualNormalBuffer;
     GLint m_positionSlot;
     GLint m_colorSlot;
+    GLint m_normalSlot;
     GLint m_projectionUniform;
     GLint m_modelviewUniform;
     
-    GLuint m_normalBuffer;
+    LightAttributes m_lightAttributes;
+    LightUniforms m_lightUniforms;
 };
