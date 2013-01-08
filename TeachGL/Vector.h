@@ -36,6 +36,10 @@ template <typename T>
 class Vector4
 {
 public:
+    Vector4();
+    Vector4(T x, T y, T z, T w);
+    
+    const T * Pointer() const;
     
     T x;
     T y;
@@ -79,6 +83,26 @@ Vector3<T> Vector3<T>::Cross(const Vector3<T> &v) const
                                   z * v.x - x * v.z,
                                   x * v.y - y * v.x);
     return cross;
+}
+
+
+
+template <typename T>
+Vector4<T>::Vector4(): x(0), y(0), z(0), w(0)
+{
+    
+}
+
+template <typename T>
+Vector4<T>::Vector4(T x, T y, T z, T w): x(x), y(y), z(z), w(w)
+{
+    
+}
+
+template <typename T>
+const T * Vector4<T>::Pointer() const
+{
+    return &x;
 }
 
 

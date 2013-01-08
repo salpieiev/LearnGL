@@ -127,6 +127,7 @@ Renderer::Renderer()
 {
     // No lighting
     m_program = BuildProgram(VertexShader, FragmentShader);
+    glUseProgram(m_program);
     
     m_positionSlot = glGetAttribLocation(m_program, "Position");
     m_colorSlot = glGetAttribLocation(m_program, "SourceColor");
@@ -138,20 +139,23 @@ Renderer::Renderer()
     
     // Lighting
     m_lightProgram = BuildProgram(LightVertexShader, LightFragmentShader);
+    glUseProgram(m_lightProgram);
     
     m_lightAttributes.Position = glGetAttribLocation(m_lightProgram, "Position");
     m_lightAttributes.Normal = glGetAttribLocation(m_lightProgram, "Normal");
     m_lightAttributes.Diffuse = glGetAttribLocation(m_lightProgram, "DiffuseMaterial");
     
+    m_lightUniforms.Projection = glGetUniformLocation(m_lightProgram, "Projection");
     m_lightUniforms.Modelview = glGetUniformLocation(m_lightProgram, "Modelview");
-    m_lightUniforms.Projection = glGetUniformLocation(m_lightProgram, "Projection");;
-    m_lightUniforms.NormalMatrix = glGetUniformLocation(m_lightProgram, "NormalMatrix");;
-    m_lightUniforms.LightPosition = glGetUniformLocation(m_lightProgram, "LightPosition");;
-    m_lightUniforms.Ambient = glGetUniformLocation(m_lightProgram, "AmbientMaterial");;
-    m_lightUniforms.Specular = glGetUniformLocation(m_lightProgram, "SpecularMaterial");;
+    m_lightUniforms.NormalMatrix = glGetUniformLocation(m_lightProgram, "NormalMatrix");
+    m_lightUniforms.LightPosition = glGetUniformLocation(m_lightProgram, "LightPosition");
+    m_lightUniforms.Ambient = glGetUniformLocation(m_lightProgram, "AmbientMaterial");
+    m_lightUniforms.Specular = glGetUniformLocation(m_lightProgram, "SpecularMaterial");
     m_lightUniforms.Shininess = glGetUniformLocation(m_lightProgram, "Shininess");
     
-    glUniform4f(m_lightUniforms.LightPosition, 0.25f, 0.25f, 1.0f, 0.0f);
+//    vec4 lightPosition(0.25, 0.25, 1, 0);
+//    glUniform3fv(m_lightUniforms.LightPosition, 1, lightPosition.Pointer());
+    glUniform3f(m_lightUniforms.LightPosition, 0.25, 0.25, 1.0);
     glUniform3f(m_lightUniforms.Ambient, 0.04f, 0.04f, 0.04f);
     glUniform3f(m_lightUniforms.Specular, 0.5f, 0.5f, 0.5f);
     glUniform1f(m_lightUniforms.Shininess, 50.0f);

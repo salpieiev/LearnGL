@@ -21,13 +21,13 @@ struct LightAttributes
 
 struct LightUniforms
 {
-    GLuint Modelview;
-    GLuint Projection;
-    GLuint NormalMatrix;
-    GLuint LightPosition;
-    GLuint Ambient;
-    GLuint Specular;
-    GLuint Shininess;
+    GLint Modelview;
+    GLint Projection;
+    GLint NormalMatrix;
+    GLint LightPosition;
+    GLint Ambient;
+    GLint Specular;
+    GLint Shininess;
 };
 
 
