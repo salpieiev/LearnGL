@@ -25,8 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		B48C1B39169B4CE7009571F1 /* LightShader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = LightShader.vsh; sourceTree = "<group>"; };
 		B48C1B3C169B4CF5009571F1 /* LightShader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = LightShader.fsh; sourceTree = "<group>"; };
+		B49646D9169C3259004055DD /* LightShader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = LightShader.vsh; sourceTree = "<group>"; };
 		B49975C8168F6BBC000AC303 /* Matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix.h; sourceTree = "<group>"; };
 		B49975CB168FB13E000AC303 /* Vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
 		B49C8B08168AFDF700722C66 /* TeachGL.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TeachGL.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -162,7 +162,7 @@
 			children = (
 				B4C9BC56168EFE3800224BA9 /* Shader.vsh */,
 				B4C9BC55168EFE3800224BA9 /* Shader.fsh */,
-				B48C1B39169B4CE7009571F1 /* LightShader.vsh */,
+				B49646D9169C3259004055DD /* LightShader.vsh */,
 				B48C1B3C169B4CF5009571F1 /* LightShader.fsh */,
 			);
 			path = Shaders;
