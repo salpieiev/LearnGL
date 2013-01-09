@@ -27,7 +27,6 @@ typedef struct
 {
     float Position[3];
     float Color[4];
-    float TexCoord[2];
 } Vertex;
 
 const Vertex Vertices[] =
@@ -74,32 +73,32 @@ const GLushort LineIndices[] =
 
 const Vertex CubeVertices[]
 {
-    {{1, -3, -6}, {0, 0, 0, 1}, {0, 0}},
-    {{2, -3, -6}, {0, 0, 1, 1}, {0, 0}},
-    {{2, -3, -7}, {0, 1, 0, 1}, {0, 0}},
-    {{1, -3, -7}, {0, 1, 1, 1}, {0, 0}},
-    {{1, -2, -6}, {1, 0, 0, 1}, {0, 0}},
-    {{2, -2, -6}, {1, 0, 1, 1}, {0, 0}},
-    {{2, -2, -7}, {1, 1, 0, 1}, {0, 0}},
-    {{1, -2, -7}, {1, 1, 1, 1}, {0, 0}},
+    {{1, -3, -6}, {0, 0, 0, 1}},
+    {{2, -3, -6}, {0, 0, 1, 1}},
+    {{2, -3, -7}, {0, 1, 0, 1}},
+    {{1, -3, -7}, {0, 1, 1, 1}},
+    {{1, -2, -6}, {1, 0, 0, 1}},
+    {{2, -2, -6}, {1, 0, 1, 1}},
+    {{2, -2, -7}, {1, 1, 0, 1}},
+    {{1, -2, -7}, {1, 1, 1, 1}},
     
-    {{2, 0.5, -6}, {0.3, 0.3, 0.3, 1}, {0, 0}},
-    {{3, 0.5, -6}, {0.3, 0.3, 0.3, 1}, {0, 0}},
-    {{3, 0.5, -7}, {0.3, 0.3, 0.3, 1}, {0, 0}},
-    {{2, 0.5, -7}, {0.3, 0.3, 0.3, 1}, {0, 0}},
-    {{2, -0.5, -6}, {0.3, 0.3, 0.3, 1}, {0, 0}},
-    {{3, -0.5, -6}, {0.3, 0.3, 0.3, 1}, {0, 0}},
-    {{3, -0.5, -7}, {0.3, 0.3, 0.3, 1}, {0, 0}},
-    {{2, -0.5, -7}, {0.3, 0.3, 0.3, 1}, {0, 0}},
+    {{2, 0.5, -6}, {0.3, 0.3, 0.3, 1}},
+    {{3, 0.5, -6}, {0.3, 0.3, 0.3, 1}},
+    {{3, 0.5, -7}, {0.3, 0.3, 0.3, 1}},
+    {{2, 0.5, -7}, {0.3, 0.3, 0.3, 1}},
+    {{2, -0.5, -6}, {0.3, 0.3, 0.3, 1}},
+    {{3, -0.5, -6}, {0.3, 0.3, 0.3, 1}},
+    {{3, -0.5, -7}, {0.3, 0.3, 0.3, 1}},
+    {{2, -0.5, -7}, {0.3, 0.3, 0.3, 1}},
     
-    {{1, 3, -6}, {0.3, 0.3, 0.3, 1}, {0, 1}},
-    {{2, 3, -6}, {0.3, 0.3, 0.3, 1}, {1, 1}},
-    {{2, 3, -7}, {0.3, 0.3, 0.3, 1}, {0, 0}},
-    {{1, 3, -7}, {0.3, 0.3, 0.3, 1}, {0, 0}},
-    {{1, 2, -6}, {0.3, 0.3, 0.3, 1}, {0, 0}},
-    {{2, 2, -6}, {0.3, 0.3, 0.3, 1}, {1, 0}},
-    {{2, 2, -7}, {0.3, 0.3, 0.3, 1}, {0, 0}},
-    {{1, 2, -7}, {0.3, 0.3, 0.3, 1}, {0, 0}}
+    {{1, 3, -6}, {0.3, 0.3, 0.3, 1}},
+    {{2, 3, -6}, {0.3, 0.3, 0.3, 1}},
+    {{2, 3, -7}, {0.3, 0.3, 0.3, 1}},
+    {{1, 3, -7}, {0.3, 0.3, 0.3, 1}},
+    {{1, 2, -6}, {0.3, 0.3, 0.3, 1}},
+    {{2, 2, -6}, {0.3, 0.3, 0.3, 1}},
+    {{2, 2, -7}, {0.3, 0.3, 0.3, 1}},
+    {{1, 2, -7}, {0.3, 0.3, 0.3, 1}}
 };
 
 const GLushort CubeIndices[] =
@@ -142,6 +141,22 @@ const GLushort CubeIndices[] =
     16, 20, 23,
     16, 17, 21,
     16, 21, 20
+};
+
+const float TextureValues[][2] =
+{
+    {0, 0}, {1, 1}, {1, 0},
+    {0, 0}, {0, 1}, {1, 1},
+    {1, 0}, {0, 0}, {0, 1},
+    {1, 0}, {0, 1}, {1, 1},
+    {1, 1}, {1, 0}, {0, 0},
+    {0, 1}, {1, 1}, {0, 0},
+    {0, 1}, {1, 1}, {1, 0},
+    {0, 1}, {1, 0}, {0, 0},
+    {1, 1}, {0, 0}, {0, 1},
+    {1, 1}, {1, 0}, {0, 0},
+    {0, 1}, {1, 1}, {1, 0},
+    {0, 1}, {1, 0}, {0, 0}
 };
 
 
@@ -197,7 +212,7 @@ Renderer::Renderer()
     vector<float> normalFloats(cubeIndicesCount * 7 * 2);
     vector<float> lightCubeVertices(cubeIndicesCount * 8);
     
-    for (int i = 2, j = 0, k = 0; i < cubeIndicesCount; i += 3)
+    for (int i = 2, j = 0, k = 0, l = 0; i < cubeIndicesCount; i += 3)
     {
         GLushort index0 = CubeIndices[i - 2];
         GLushort index1 = CubeIndices[i - 1];
@@ -280,8 +295,9 @@ Renderer::Renderer()
         lightCubeVertices[k++] = normal.y;
         lightCubeVertices[k++] = normal.z;
         
-        lightCubeVertices[k++] = vertex0.TexCoord[0];
-        lightCubeVertices[k++] = vertex0.TexCoord[1];
+        lightCubeVertices[k++] = TextureValues[l][0];
+        lightCubeVertices[k++] = TextureValues[l][1];
+        l++;
         
         lightCubeVertices[k++] = vertex1.Position[0];
         lightCubeVertices[k++] = vertex1.Position[1];
@@ -291,8 +307,9 @@ Renderer::Renderer()
         lightCubeVertices[k++] = normal.y;
         lightCubeVertices[k++] = normal.z;
         
-        lightCubeVertices[k++] = vertex1.TexCoord[0];
-        lightCubeVertices[k++] = vertex1.TexCoord[1];
+        lightCubeVertices[k++] = TextureValues[l][0];
+        lightCubeVertices[k++] = TextureValues[l][1];
+        l++;
         
         lightCubeVertices[k++] = vertex2.Position[0];
         lightCubeVertices[k++] = vertex2.Position[1];
@@ -302,8 +319,14 @@ Renderer::Renderer()
         lightCubeVertices[k++] = normal.y;
         lightCubeVertices[k++] = normal.z;
         
-        lightCubeVertices[k++] = vertex2.TexCoord[0];
-        lightCubeVertices[k++] = vertex2.TexCoord[1];
+        lightCubeVertices[k++] = TextureValues[l][0];
+        lightCubeVertices[k++] = TextureValues[l][1];
+        l++;
+        
+        if (l % (12 * 3) == 0)
+        {
+            l = 0;
+        }
     }
     
     glGenBuffers(1, &m_vertexBuffer);
@@ -342,12 +365,13 @@ Renderer::Renderer()
     m_resourceManager->LoadPngImage("tile_floor.png");
     ivec2 imageSize = m_resourceManager->GetImageSize();
     void *imageData = m_resourceManager->GetImageData();
-    m_resourceManager->UnloadImage();
     
     glGenTextures(1, &m_textureTile);
     glBindTexture(GL_TEXTURE_2D, m_textureTile);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageSize.x, imageSize.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
+    
+    m_resourceManager->UnloadImage();
 }
 
 Renderer::~Renderer()
