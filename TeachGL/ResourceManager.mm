@@ -27,7 +27,10 @@ void ResourceManager::LoadPngImage(const string &fileName)
 
 void ResourceManager::UnloadImage()
 {
+    m_imageSize = ivec2();
+    
     CFRelease(m_imageData);
+    m_imageData = NULL;
 }
 
 void * ResourceManager::GetImageData() const

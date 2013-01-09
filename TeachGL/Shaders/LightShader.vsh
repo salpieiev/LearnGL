@@ -4,7 +4,8 @@ const char *LightVertexShader = STRINGIFY
  attribute vec4 Position;
  attribute vec3 Normal;
  attribute vec3 DiffuseMaterial;
- 
+ attribute vec2 TexCoordIn;
+
  uniform mat4 Projection;
  uniform mat4 Modelview;
  uniform mat3 NormalMatrix;
@@ -14,6 +15,7 @@ const char *LightVertexShader = STRINGIFY
  uniform float Shininess;
  
  varying vec4 DestinationColor;
+ varying vec2 TexCoordOut;
  
  void main(void)
  {
@@ -31,6 +33,7 @@ const char *LightVertexShader = STRINGIFY
      DestinationColor = vec4(color, 1);
      
      gl_Position = Projection * Modelview * Position;
+     TexCoordOut = TexCoordIn;
  }
 
 );

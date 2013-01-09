@@ -30,6 +30,7 @@ struct LightAttributes
     GLint Position;
     GLint Normal;
     GLint DiffuseMaterial;
+    GLint TexCoordIn;
 };
 
 struct LightUniforms
@@ -41,6 +42,7 @@ struct LightUniforms
     GLint AmbientMaterial;
     GLint SpecularMaterial;
     GLint Shininess;
+    GLint Texture;
 };
 
 
@@ -70,6 +72,7 @@ private:
     GLuint m_cubeIndexBuffer;
     GLuint m_normalBuffer;
     GLuint m_cubeLightVertexBuffer;
+    GLuint m_textureTile;
     
     SimpleAttributes m_simpleAttributes;
     SimpleUniforms m_simpleUniforms;
