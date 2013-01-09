@@ -149,14 +149,14 @@ const float TextureValues[][2] =
     {0, 0}, {0, 1}, {1, 1},
     {1, 0}, {0, 0}, {0, 1},
     {1, 0}, {0, 1}, {1, 1},
-    {1, 1}, {1, 0}, {0, 0},
-    {0, 1}, {1, 1}, {0, 0},
-    {0, 1}, {1, 1}, {1, 0},
-    {0, 1}, {1, 0}, {0, 0},
-    {1, 1}, {0, 0}, {0, 1},
-    {1, 1}, {1, 0}, {0, 0},
-    {0, 1}, {1, 1}, {1, 0},
-    {0, 1}, {1, 0}, {0, 0}
+    {1, 0}, {1, 1}, {0, 1},
+    {0, 0}, {1, 0}, {0, 1},
+    {0, 0}, {1, 0}, {1, 1},
+    {0, 0}, {1, 1}, {0, 1},
+    {1, 0}, {0, 1}, {0, 0},
+    {1, 0}, {1, 1}, {0, 1},
+    {0, 0}, {1, 0}, {1, 1},
+    {0, 0}, {1, 1}, {0, 1}
 };
 
 
@@ -368,7 +368,7 @@ Renderer::Renderer()
     
     glGenTextures(1, &m_textureTile);
     glBindTexture(GL_TEXTURE_2D, m_textureTile);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, imageSize.x, imageSize.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, imageData);
     
     m_resourceManager->UnloadImage();
