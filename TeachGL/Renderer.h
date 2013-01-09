@@ -7,6 +7,7 @@
 //
 
 #pragma once
+#include "ResourceManager.h"
 #include <OpenGLES/ES2/gl.h>
 #include <OpenGLES/ES2/glext.h>
 
@@ -56,6 +57,8 @@ public:
 private:
     GLuint BuildShader(const char *source, GLenum shaderType);
     GLuint BuildProgram(const char *vertexShader, const char *fragmentShader);
+    
+    ResourceManager *m_resourceManager;
     
     GLuint m_program;
     GLuint m_lightProgram;

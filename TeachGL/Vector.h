@@ -17,6 +17,17 @@ const float TwoPi = 2 * Pi;
 
 
 template <typename T>
+class Vector2
+{
+public:
+    Vector2();
+    Vector2(T x, T y);
+    
+    T x;
+    T y;
+};
+
+template <typename T>
 class Vector3
 {
 public:
@@ -46,6 +57,20 @@ public:
     T z;
     T w;
 };
+
+
+
+template <typename T>
+Vector2<T>::Vector2(): x(0), y(0)
+{
+    
+}
+
+template <typename T>
+Vector2<T>::Vector2(T x, T y): x(x), y(y)
+{
+    
+}
 
 
 
@@ -107,5 +132,6 @@ const T * Vector4<T>::Pointer() const
 
 
 
+typedef Vector2<int> ivec2;
 typedef Vector3<float> vec3;
 typedef Vector4<float> vec4;

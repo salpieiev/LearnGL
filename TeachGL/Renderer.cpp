@@ -147,6 +147,8 @@ const GLushort CubeIndices[] =
 
 Renderer::Renderer()
 {
+    m_resourceManager = new ResourceManager();
+    
     // Simple program
     m_program = BuildProgram(VertexShader, FragmentShader);
     glUseProgram(m_program);
@@ -326,7 +328,7 @@ Renderer::Renderer()
 
 Renderer::~Renderer()
 {
-    
+    delete m_resourceManager;
 }
 
 void Renderer::Render(int width, int height, double time) const

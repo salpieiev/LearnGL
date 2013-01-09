@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B48AFAE0169D77F50006F317 /* item_powerup_fish.png in Resources */ = {isa = PBXBuildFile; fileRef = B48AFADE169D77F50006F317 /* item_powerup_fish.png */; };
+		B48AFAE1169D77F50006F317 /* tile_floor.png in Resources */ = {isa = PBXBuildFile; fileRef = B48AFADF169D77F50006F317 /* tile_floor.png */; };
+		B48AFAE7169D796E0006F317 /* ResourceManager.mm in Sources */ = {isa = PBXBuildFile; fileRef = B48AFAE5169D796E0006F317 /* ResourceManager.mm */; };
 		B49C8B0D168AFDF700722C66 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B49C8B0C168AFDF700722C66 /* UIKit.framework */; };
 		B49C8B0F168AFDF700722C66 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B49C8B0E168AFDF700722C66 /* Foundation.framework */; };
 		B49C8B11168AFDF700722C66 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B49C8B10168AFDF700722C66 /* CoreGraphics.framework */; };
@@ -25,6 +28,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B48AFADE169D77F50006F317 /* item_powerup_fish.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = item_powerup_fish.png; sourceTree = "<group>"; };
+		B48AFADF169D77F50006F317 /* tile_floor.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tile_floor.png; sourceTree = "<group>"; };
+		B48AFAE5169D796E0006F317 /* ResourceManager.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ResourceManager.mm; sourceTree = "<group>"; };
+		B48AFAE6169D796E0006F317 /* ResourceManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResourceManager.h; sourceTree = "<group>"; };
 		B48C1B3C169B4CF5009571F1 /* LightShader.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = LightShader.fsh; sourceTree = "<group>"; };
 		B49646D9169C3259004055DD /* LightShader.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; path = LightShader.vsh; sourceTree = "<group>"; };
 		B49975C8168F6BBC000AC303 /* Matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix.h; sourceTree = "<group>"; };
@@ -76,7 +83,8 @@
 			children = (
 				B4C9BC59168EFF9400224BA9 /* Images */,
 			);
-			path = Resources;
+			name = Resources;
+			path = TeachGL/Resources;
 			sourceTree = "<group>";
 		};
 		B414B310168EFC2E00D221F3 /* View Controllers */ = {
@@ -171,6 +179,8 @@
 		B4C9BC59168EFF9400224BA9 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				B48AFADE169D77F50006F317 /* item_powerup_fish.png */,
+				B48AFADF169D77F50006F317 /* tile_floor.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -180,6 +190,8 @@
 			children = (
 				B4C9BC5B168F0C6D00224BA9 /* Renderer.cpp */,
 				B4C9BC5C168F0C6D00224BA9 /* Renderer.h */,
+				B48AFAE5169D796E0006F317 /* ResourceManager.mm */,
+				B48AFAE6169D796E0006F317 /* ResourceManager.h */,
 			);
 			name = GraphicsEngine;
 			sourceTree = "<group>";
@@ -240,6 +252,8 @@
 				B49C8B25168AFDF700722C66 /* Default@2x.png in Resources */,
 				B49C8B27168AFDF700722C66 /* Default-568h@2x.png in Resources */,
 				B49C8B31168AFDF700722C66 /* ViewController.xib in Resources */,
+				B48AFAE0169D77F50006F317 /* item_powerup_fish.png in Resources */,
+				B48AFAE1169D77F50006F317 /* tile_floor.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,6 +268,7 @@
 				B49C8B21168AFDF700722C66 /* AppDelegate.mm in Sources */,
 				B49C8B2E168AFDF700722C66 /* ViewController.mm in Sources */,
 				B4C9BC5D168F0C6D00224BA9 /* Renderer.cpp in Sources */,
+				B48AFAE7169D796E0006F317 /* ResourceManager.mm in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
