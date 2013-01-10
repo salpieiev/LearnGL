@@ -196,9 +196,9 @@ Renderer::Renderer()
     
     glVertexAttrib3f(m_lightAttributes.DiffuseMaterial, 0.5, 0.6, 0.5);
     glUniform3f(m_lightUniforms.LightPosition, 0.25f, -0.25f, 1.0f);
-    glUniform3f(m_lightUniforms.AmbientMaterial, 0.1f, 0.1f, 0.1f);
+    glUniform3f(m_lightUniforms.AmbientMaterial, 0.3f, 0.3f, 0.3f);
     glUniform3f(m_lightUniforms.SpecularMaterial, 0.5f, 0.5f, 0.5f);
-    glUniform1f(m_lightUniforms.Shininess, 50);
+    glUniform1f(m_lightUniforms.Shininess, 10);
     
     glEnableVertexAttribArray(m_lightAttributes.Position);
     glEnableVertexAttribArray(m_lightAttributes.Normal);
