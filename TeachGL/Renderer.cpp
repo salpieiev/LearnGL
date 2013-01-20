@@ -34,13 +34,21 @@ const Vertex Vertices[] =
     {{1, -1, -7}, {1, 0, 0, 1}},
     {{1, 1, -7}, {0, 1, 0, 1}},
     {{-1, 1, -7}, {0, 0, 1, 1}},
-    {{-1, -1, -7}, {0, 0, 0, 1}}
+    {{-1, -1, -7}, {0, 0, 0, 1}},
+    
+    {{0.5, -0.5, -7}, {0, 1, 0, 1}},
+    {{0.5, 0.5, -7}, {0, 1, 0, 1}},
+    {{-0.5, 0.5, -7}, {0, 1, 0, 1}},
+    {{-0.5, -0.5, -7}, {0, 1, 0, 1}}
 };
 
 const GLushort Indices[] =
 {
     0, 1, 2,
-    2, 3, 0
+    2, 3, 0,
+    
+    4, 5, 6,
+    6, 7, 4
 };
 
 const Vertex LineVertices[] =
@@ -205,6 +213,9 @@ Renderer::Renderer()
     glEnableVertexAttribArray(m_lightAttributes.TexCoordIn);
     
     glEnable(GL_DEPTH_TEST);
+    glDepthFunc(GL_LEQUAL);
+    
+    glEnable(GL_POLYGON_OFFSET_FILL);
     
     // Generate new vertices for cubes with lighting
     int cubeIndicesCount = sizeof(CubeIndices) / sizeof(CubeIndices[0]);
@@ -396,23 +407,7 @@ void Renderer::Render(int width, int height, double time) const
     modelview = modelview.RotateZ(8 * std::sin(time));
     glUniformMatrix4fv(m_simpleUniforms.Modelview, 1, GL_FALSE, modelview.Pointer());
     
-    glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);
     
-    glVertexAttribPointer(m_simpleAttributes.Position, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), NULL);
-    glVertexAttribPointer(m_simpleAttributes.SourceColor, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *)(sizeof(float) * 3));
-    
-    glDrawElements(GL_TRIANGLES, sizeof(Indices) / sizeof(Indices[0]), GL_UNSIGNED_SHORT, NULL);
-    
-    
-    glBindBuffer(GL_ARRAY_BUFFER, m_lineVertexBuffer);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_lineIndexBuffer);
-    
-    glVertexAttribPointer(m_simpleAttributes.Position, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), NULL);
-    glVertexAttribPointer(m_simpleAttributes.SourceColor, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *)(sizeof(float) * 3));
-    
-    GLint drawCount = sizeof(LineIndices) / sizeof(LineIndices[0]);
-    glDrawElements(GL_LINES, drawCount, GL_UNSIGNED_SHORT, NULL);
     
     
     float degree = ((int)(time * 10000.0f)) % 36000 / 100.0f;
@@ -423,6 +418,28 @@ void Renderer::Render(int width, int height, double time) const
     
     modelview = translated2 * rotated1 * translated1 * modelview;
     glUniformMatrix4fv(m_simpleUniforms.Modelview, 1, GL_FALSE, modelview.Pointer());
+    
+    glBindBuffer(GL_ARRAY_BUFFER, m_vertexBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);
+    
+    glVertexAttribPointer(m_simpleAttributes.Position, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), NULL);
+    glVertexAttribPointer(m_simpleAttributes.SourceColor, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *)(sizeof(float) * 3));
+    
+    glPolygonOffset(0, 0);
+    GLuint indicesPerQuad = sizeof(Indices) / sizeof(Indices[0]) / 2;
+    glDrawElements(GL_TRIANGLES, indicesPerQuad, GL_UNSIGNED_SHORT, NULL);
+    glPolygonOffset(-1.0f, -1.0f);
+    glDrawElements(GL_TRIANGLES, indicesPerQuad, GL_UNSIGNED_SHORT, (GLvoid *)(indicesPerQuad * sizeof(GLushort)));
+    
+    
+    glBindBuffer(GL_ARRAY_BUFFER, m_lineVertexBuffer);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_lineIndexBuffer);
+    
+    glVertexAttribPointer(m_simpleAttributes.Position, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), NULL);
+    glVertexAttribPointer(m_simpleAttributes.SourceColor, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *)(sizeof(float) * 3));
+    
+    GLint drawCount = sizeof(LineIndices) / sizeof(LineIndices[0]);
+    glDrawElements(GL_LINES, drawCount, GL_UNSIGNED_SHORT, NULL);
     
     glBindBuffer(GL_ARRAY_BUFFER, m_cubeVertexBuffer);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_cubeIndexBuffer);
